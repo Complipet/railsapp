@@ -1,0 +1,5 @@
+#!/bin/sh
+/etc/init.d/nginx stop
+git --work-tree=/var/www/contacts --git-dir=/root/repo checkout -f
+/etc/init.d/nginx start
+exit 0

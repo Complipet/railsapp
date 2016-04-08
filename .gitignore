@@ -1,0 +1,5 @@
+tmp/
+.bundle
+log/
+public/system/
+vendor

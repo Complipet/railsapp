@@ -1,0 +1,5 @@
+#!/bin/sh
+service ngnix stop
+git --work-tree=/var/www/petster --git-dir=/root/repo checkout -f
+service ngnix start
+exit 0

@@ -1,0 +1,104 @@
+<!-- =begin
+     <!-- % @show_pet_activity.each_with_index do |pa,index| %>
+     <div class="feed" >
+     <div class="feedposter">
+     <div class="row">
+     <div class="col-sm-1">
+     < image_tag pa.pet.petimg.url(:thumb), :width=>"50px" %><br/>
+     </div>
+     <div class="col-sm-11" >
+     <div align="left">
+     < pa.pet.name %>
+     < if pa.pet.pettype=="Cat" %>
+     the mischievous Cat
+     < elsif pa.pet.pettype="Dog" %>
+     the naughty Dog
+     < end %>
+     Posted<br/>
+     </div>
+     </div>
+     </div>
+     </div>
+     < if pa.actimg_file_name? %>
+     < image_tag pa.actimg.url, :width=>"100%" %><br/>
+     < else %>
+     
+     < end %>
+     <big><= pa.activitydesc %></big><br/>
+     <% lkid="lkid"+index.to_s %>
+     <% splkid="span"+lkid %>
+     <span id=<%=splkid%>></span> 
+     <% if current_user.voted_for? pa %>
+     <%= pa.get_upvotes.size %> Likes | Unlike
+     <% else %>
+     <% lkstatus="like"+lkid %>
+     <span id=<%=lkstatus %>><%= pa.get_upvotes.size %> Likes</span> |
+     <!--  link_to 'Like', vote_pet_activity_path(pa), class: "like", id: lkid, method: :put -->
+<%=  link_to 'Like', vote_pet_activity_path(pa), class: "like", id: lkid, method: :put, :remote => true %>
+     <% end %>
+     <% if pa.actimg_file_name %>
+	     <input id="input<%=index%>" type="number" class="rating" min=0 max=5 step=0.5 data-size="xs" data-id="<%=pa.id%>" data-userid="<%=current_user.id%>" data-avg="<%=pa.avgrating%>" data-glyphicon="false"> <%= pa.totalrating%> Ratings
+     <% end %>
+     <hr/>
+     <font color="blue"><%= pa.comments.count %> Comments</font> <input type="button" class="btncmnt" id="c<%=index%>"value="Show"/> 		
+     <div class="commentdiv" id="divc<%=index%>">
+	     <% pa.comments.each do |pc| %>
+		     <%= pc.body %>
+		     -<i>
+		     <% if pc.pet_id==1000 %>
+			     <% fl = pc.user.firstname+' '+pc.user.lastname 
+			     %>
+			     <%= link_to fl, user_path(:id=>pc.id) %> 
+			     <% if current_user.hasbusiness %>
+				     <%= link_to current_user.business.name, business_path(current_user)%>
+			     <% end %>
+		     <% else %>
+			     <%= link_to pc.pet.name, pet_path(:id=>pc.pet.id) %>
+		     <% end %></i>
+		     <br/>
+	     <% end %>
+	     <div class="addcomment" >
+		     <br/><b>Comment As: <input type="radio" name="comment" id="self" checked="checked" class="cmnt" />Yourself
+			     <input type="radio" name="comment" id="pet" class="cmnt" />Pet
+		     </b>
+		     <div class="cp">
+			     Commenting as Pet 
+			     <% if current_user.pets.count > 0 %>
+				     <%= form_for([pa,pa.comments.build]) do |pac| %>
+					     <%= pac.hidden_field :pet_activity_id, :value => pa.id %>
+					     <%= pac.hidden_field :user_id, :value => current_user.id %>
+					     <% current_user.pets.each do |cp|  %>
+						     <%= pac.radio_button :pet_id, cp.id %> <%= pac.label cp.name %>
+						     <!--  pac.hidden_field :pet_id, :value => cp.id -->
+					     <% end %>
+					     <p>
+						     <%= pac.text_area :body %>
+					     </p> 
+					     <p>
+						     <%= pac.submit "Comment" %>
+					     </p>
+				     <% end %>
+			     <% else %>
+				     <br/><b>You Have not added any Pets yet.</b>
+			     <% end %>
+		     </div>
+		     <div class="cy">
+			     Commenting as User
+			     <%= form_for([pa,pa.comments.build]) do |pac| %>
+				     <p>
+					     <%= pac.text_area :body %>
+				     </p>
+				     <p>
+					     <%= pac.submit "Comment" %>
+				     </p>
+				     <%= pac.hidden_field :pet_activity_id, :value => pa.id %>
+				     <%= pac.hidden_field :user_id, :value => current_user.id %>
+				     <%= pac.hidden_field :pet_id, :value => 1000 %>
+			     <% end %>
+		     </div>
+	     </div>
+     </div>
+     </div>
+     end -->
+
+     =end -->
